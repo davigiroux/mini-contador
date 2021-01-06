@@ -1,0 +1,42 @@
+.App {
+  display: grid;
+  text-align: center;
+  grid-template-rows: 60px 1fr;
+}
+
+.navbar {
+  background-color: #39b2d6;
+  display: grid;
+  grid-template-columns: 1fr 6fr auto auto;
+  grid-template-areas: "logo free link1 link2";
+  justify-content: center;
+  align-items: center;
+  column-gap: 20px;
+}
+
+.navbar .logo {
+  color: #ececec;
+  font-size: 30px;
+  font-weight: 600;
+  grid-area: logo;
+  padding-left: 20px;
+}
+
+.navbar .link1 {
+  grid-area: link1;
+}
+
+.navbar .link2 {
+  grid-area: link2;
+  padding-right: 20px;
+}
+
+.navbar .navbar-link {
+  text-decoration: none;
+  color: #ececec;
+  font-size: 20px;
+} 
+
+.navbar .navbar-link:hover {
+  color: #dadada;
+} 
