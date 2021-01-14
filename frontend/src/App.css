@@ -2,6 +2,7 @@
   display: grid;
   text-align: center;
   grid-template-rows: 60px 1fr;
+  background-color: #f3f3f3;
 }
 
 .navbar {
@@ -15,7 +16,7 @@
 }
 
 .navbar .logo {
-  color: #ececec;
+  color: #f7f5f5;
   font-size: 30px;
   font-weight: 600;
   grid-area: logo;
@@ -33,7 +34,7 @@
 
 .navbar .navbar-link {
   text-decoration: none;
-  color: #ececec;
+  color: #f7f5f5;
   font-size: 20px;
 } 
 

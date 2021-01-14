@@ -39,9 +39,10 @@ app.use(function (req, res, next) {
     next();
 });
 app.get("/contas", ContaController.allContas);
+app.get("/contas/mesReferencia/:mesReferencia/anoReferencia/:anoReferencia", ContaController.buscarContasPorAnoEMes);
 app.get("/contas/:id", ContaController.showConta);
 app.post("/contas", ContaController.adicionarConta);
-app.patch("/contas/:id", ContaController.alterarConta);
+app.put("/contas/:id", ContaController.alterarConta);
 app.delete("/contas/:id", ContaController.deletarConta);
 app.listen(port, () => {
     console.log(`Server running on ${port}`);

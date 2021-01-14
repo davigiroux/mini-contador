@@ -1,22 +1,20 @@
 import mongoose, { Schema, Document } from "mongoose";
+import { ReferenciaInterface } from './Referencia';
 
-enum TipoDeConta {
-  Debito = "0",
-  Credito = "1"
-}
 
 export interface ContaInterface extends Document {
   descricao: string;
   valor: number;
-  tipo: TipoDeConta;
-  mesReferencia: Number;
+  dataReferencia: ReferenciaInterface;
 }
 
 const ContaSchema: Schema = new Schema({
   descricao: { type: String, required: true },
   valor: { type: Number, required: true },
-  tipo: { type: Number, required: true},
-  mesReferencia: { type: Number, required: true }
+  dataReferencia: {
+    ano: { type: Number, required: true },
+    mes: { type: Number, required: true}
+  }
 });
 
 const Conta = mongoose.model<ContaInterface>("Conta", ContaSchema);

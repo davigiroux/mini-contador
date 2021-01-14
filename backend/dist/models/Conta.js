@@ -20,16 +20,13 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importStar(require("mongoose"));
-var TipoDeConta;
-(function (TipoDeConta) {
-    TipoDeConta["Debito"] = "0";
-    TipoDeConta["Credito"] = "1";
-})(TipoDeConta || (TipoDeConta = {}));
 const ContaSchema = new mongoose_1.Schema({
     descricao: { type: String, required: true },
     valor: { type: Number, required: true },
-    tipo: { type: Number, required: true },
-    mesReferencia: { type: Number, required: true }
+    dataReferencia: {
+        ano: { type: Number, required: true },
+        mes: { type: Number, required: true }
+    }
 });
 const Conta = mongoose_1.default.model("Conta", ContaSchema);
 exports.default = Conta;

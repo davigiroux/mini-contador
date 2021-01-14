@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deletarConta = exports.alterarConta = exports.adicionarConta = exports.showConta = exports.allContas = void 0;
+exports.buscarContasPorAnoEMes = exports.deletarConta = exports.alterarConta = exports.adicionarConta = exports.showConta = exports.allContas = void 0;
 const Conta_1 = __importDefault(require("../models/Conta"));
 const allContas = (req, res) => {
     const contas = Conta_1.default.find((err, contas) => {
@@ -31,7 +31,7 @@ const adicionarConta = (req, res) => {
     const conta = new Conta_1.default(req.body);
     conta.save((err) => {
         if (err) {
-            res.send(err);
+            res.status(400).send(err);
         }
         else {
             res.send(conta);
@@ -56,9 +56,21 @@ const deletarConta = (req, res) => {
             res.send(err);
         }
         else {
-            res.send("Conta deleted from database");
+            res.send({ status: 'success' });
         }
     });
 };
 exports.deletarConta = deletarConta;
+const buscarContasPorAnoEMes = (req, res) => {
+    Conta_1.default
+        .where('dataReferencia.mes').equals(req.params.mesReferencia)
+        .where('dataReferencia.ano').equals(req.params.anoReferencia)
+        .exec((erro, resultado) => {
+        if (erro)
+            res.status(400).send(erro);
+        else
+            res.send(resultado);
+    });
+};
+exports.buscarContasPorAnoEMes = buscarContasPorAnoEMes;
 //# sourceMappingURL=ContaController.js.map
