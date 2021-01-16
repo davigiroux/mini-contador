@@ -9,8 +9,10 @@ const stateInicial = {
     descricao: '',
     valor: 0,
     tipo: 0,
-    mesReferencia: new Date().getMonth(),
-    anoReferencia: new Date().getFullYear(),
+    dataReferencia: {
+        mes: new Date().getMonth(),
+        ano: new Date().getFullYear()
+    } 
 };
 
 function AdicionarConta() {

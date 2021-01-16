@@ -84,6 +84,10 @@ const LinkParaLista = styled.span`
 function SalvarConta({ conta, salvarConta, emitirEvento, ehEdicao = false }) {
     const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
 
+    const ehNumero = (string) => !isNaN(string) && !isNaN(parseFloat(string));
+
+    const tratarNumero = (input) => ehNumero(input) ? Number(input) : 0;
+
     return (
         <Div>
             <Titulo>{ehEdicao ? 'Editar' : 'Adicionar'} uma conta</Titulo>
@@ -101,7 +105,7 @@ function SalvarConta({ conta, salvarConta, emitirEvento, ehEdicao = false }) {
                     id="valor" 
                     name="valor" 
                     value={conta.valor} 
-                    onChange={(e) => emitirEvento({...conta, valor: Number(e.target.value)})}
+                    onChange={(e) => emitirEvento({...conta, valor: tratarNumero(e.target.value)})}
                 />
             </div>
             <div>
@@ -112,7 +116,7 @@ function SalvarConta({ conta, salvarConta, emitirEvento, ehEdicao = false }) {
                     id="mesReferencia" 
                     name="mesReferencia" 
                     value={meses[conta.dataReferencia.mes]} 
-                    onChange={(e) => emitirEvento({...conta, dataReferencia: { ano: conta.dataReferencia.ano, mes: Number(e.target.value)}})}
+                    onChange={(e) => emitirEvento({...conta, dataReferencia: { ano: conta.dataReferencia.ano, mes: tratarNumero(e.target.value)}})}
                 >
 
                     {meses.map((mes, index) => (<option value={index} key={index}>{mes}</option>))}
@@ -128,7 +132,7 @@ function SalvarConta({ conta, salvarConta, emitirEvento, ehEdicao = false }) {
                     id="anoReferencia" 
                     name="anoReferencia" 
                     value={conta.dataReferencia.ano} 
-                    onChange={(e) => emitirEvento({...conta, dataReferencia: { mes: conta.dataReferencia.mes, ano: Number(e.target.value)}})}
+                    onChange={(e) => emitirEvento({...conta, dataReferencia: { mes: conta.dataReferencia.mes, ano: tratarNumero(e.target.value)}})}
                 />
             </div>
             <ContainerBotao>
