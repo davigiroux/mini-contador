@@ -1,3 +1,11 @@
 .linkAtivo {
-    color: #39b2d6;
+    color: #3a3a3a;
+}
+
+.conta-pendente {
+    border-top: 10px solid #e6cb37;
+}
+
+.conta-paga {
+    border-top: 10px solid #77ac3b;
 }

@@ -11,12 +11,15 @@ const apiUrl = "http://localhost:5000/contas";
 
 const CabecalhoDasContas = styled.div`
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    gap: 10px;
 `;
 
 const OrdenacaoDeContas = styled.span`
     display: grid;
     grid-template-columns: auto minmax(50px, auto) 10px minmax(50px, auto);
+    grid-row-start: 2;
     justify-content: left;
     justify-items: left;
 `;
@@ -24,18 +27,27 @@ const OrdenacaoDeContas = styled.span`
 const ItemDeOrdenacao = styled.a`
     justify-self: center;
     cursor: pointer;
-
-    &:active {
-        color: #39b2d6;
-    }
+    color: #39b2d6;
 `;
 
-const TextDestaque = styled.span`
+const TextoPago = styled.span`
     display: grid;
     grid-auto-flow: column;
     gap: 10px;
     grid-column-start: 2;
-    color: #39b2d6;
+    color: #77ac3b;
+    font-size: 20px;
+    justify-content: right;
+    margin-bottom: 10px;
+`;
+
+const TextoPendente = styled.span`
+    display: grid;
+    grid-auto-flow: column;
+    gap: 10px;
+    grid-column-start: 2;
+    grid-row-start: 2;
+    color: #e6cb37;
     font-size: 20px;
     justify-content: right;
     margin-bottom: 10px;
@@ -66,6 +78,16 @@ function Contas() {
             return;
           
         const res = await Fetcher.deletar(apiUrl, id);
+
+        if(res)
+            Swal.fire('Deu certo!', 'Conta excluída com sucesso', 'success');
+
+        buscarDados();
+    }
+
+    const pagarConta = async (id) => {
+          
+        const res = await Fetcher.post(`${apiUrl}/${id}/pagar`);
 
         if(res)
             Swal.fire('Deu certo!', 'Conta excluída com sucesso', 'success');
@@ -104,7 +126,9 @@ function Contas() {
 
     async function buscarDados(mesReferencia = new Date().getMonth(), anoReferencia = new Date().getFullYear()) {
         const dados = await Fetcher.buscar(`${apiUrl}/mesReferencia/${mesReferencia}/anoReferencia/${anoReferencia}`);
-        setContas(dados);
+
+        let contasOrdenadas = dados.sort((c1, c2) => c1.status - c2.status);
+        setContas(contasOrdenadas);
     }
 
     useEffect(() => {
@@ -120,9 +144,10 @@ function Contas() {
                     -
                     <ItemDeOrdenacao onClick={() => ordenarPor('descricao')} className={ordenacaoAtiva === 'descricao' ? 'linkAtivo' : ''}>Descrição</ItemDeOrdenacao>
                 </OrdenacaoDeContas>
-                <TextDestaque>Valor total: <b>{ formatarParaReal(contas.reduce((total, conta) => total + conta.valor, 0))}</b></TextDestaque>
+                <TextoPago>Valor pago: <b>{ formatarParaReal(contas.filter(c => c.status === 1).reduce((total, conta) => total + conta.valor, 0)) }</b></TextoPago>
+                <TextoPendente>Valor pendente: <b>{ formatarParaReal(contas.filter(c => c.status === 0).reduce((total, conta) => total + conta.valor, 0)) }</b></TextoPendente>
             </CabecalhoDasContas>
-            <ListaDeContas contas={contas} excluirConta={excluirConta} /> 
+            <ListaDeContas contas={contas} excluirConta={excluirConta} pagarConta={pagarConta} /> 
         </div>
     );
 }

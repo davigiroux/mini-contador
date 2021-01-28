@@ -9,11 +9,11 @@
 .navbar {
   background-color: #39b2d6;
   display: grid;
-  grid-template-columns: 1fr 6fr auto auto;
+  grid-template-columns: auto 1fr auto auto;
   grid-template-areas: "logo free link1 link2";
   justify-content: center;
   align-items: center;
-  column-gap: 20px;
+  column-gap: 30px;
 }
 
 .navbar .logo {

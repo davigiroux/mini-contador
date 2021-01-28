@@ -22,7 +22,6 @@ const ListItem = styled.div`
     gap: 10px;
     padding: 20px;
     text-align: left;
-    border-top: 10px solid #39b2d6;
     border-radius: 3px;
     background-color: #f2f2f2;
     align-items: center;
@@ -33,12 +32,13 @@ const ListItem = styled.div`
 const Titulo = styled.span`
     font-weight: 600;
     font-size: 25px;
+    color: #3090ad;
 `;
 
 const Valor = styled.span`
     font-weight: 600;
     font-size: 20px;
-    color: #39b2d6;
+    color: #3090ad;
     justify-self: right;
 `;
 
@@ -49,7 +49,7 @@ const DataDeReferencia = styled.span`
 const AcoesDaTransacao = styled.div`
     width:100%;
     display: grid;
-    grid-template-columns: 1fr 20px 20px;
+    grid-template-columns: 50px 1fr 30px 30px;
     gap: 20px;
     justify-items: right;
     align-items: center;
@@ -64,9 +64,9 @@ const BotaoExcluir = styled.button`
     border: none;
     outline: none;
     cursor: pointer;
-    transition-delay: .1s;
+    transition-duration: .3s;
     font-size: 22px; 
-    grid-column-start: 3;   
+    grid-column-start: 4;   
 
     &:hover {
         color: #ff4c54;
@@ -74,17 +74,15 @@ const BotaoExcluir = styled.button`
 `;
 
 const BotaoEditar = styled.span`
-    grid-column-start: 2;  
+    grid-column-start: 3;  
     a {
         color: #39b2d6;
         background-color: transparent;
         border: none;
         outline: none;
         cursor: pointer;
-        transition-delay: .1s;
-        font-size: 22px;    
-        position: relative;
-        top: -2px;
+        transition-duration: .3s;
+        font-size: 22px;
 
         &:hover {
             color: #58d2f7;
@@ -92,18 +90,40 @@ const BotaoEditar = styled.span`
     } 
 `;
 
+const BotaoPagar = styled.button`
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition-duration: .3s;
+    font-size: 15px; 
+    grid-column-start: 1;   
+    position: relative;
+    justify-self: left;
+    right: -2px;
+    font-weight: 600;
+    color: #525252;
+
+    &:hover {
+        color: #a0a0a0;
+    }
+`;
+
 const TextoDeAjuda = styled.span`
     font-style: italic;
     font-size: 15px;
 `;
 
-function ListaDeContas({ contas, excluirConta }) {
+function ListaDeContas({ contas, excluirConta, pagarConta }) {
+
+    const classesDeStatusDaConta = ['conta-pendente', 'conta-paga'];
+
     return (
         <List>
             {contas.length <= 0 
                 ? <TextoDeAjuda>Nenhuma conta encontrada.</TextoDeAjuda> 
                 : contas.map(c => (
-                <ListItem key={c._id}>
+                <ListItem key={c._id} className={classesDeStatusDaConta[c.status]}>
                     <Titulo>
                         {c.descricao}
                     </Titulo>
@@ -114,6 +134,11 @@ function ListaDeContas({ contas, excluirConta }) {
                         {obterMes(c.dataReferencia.mes)}/{c.dataReferencia.ano}
                     </DataDeReferencia>
                     <AcoesDaTransacao>
+                        {c.status !== 0 ? '' : (
+                            <BotaoPagar onClick={() => pagarConta(c._id)}>
+                                PAGAR
+                            </BotaoPagar>
+                        )}
                         <BotaoEditar>
                             <Link to={`/contas/${c._id}/editar`}>
                                 <FontAwesomeIcon icon={faEdit} />

@@ -34,7 +34,7 @@ function App() {
       <div className="App">
         <nav className="navbar">
           <span className="logo">MiniContador</span>
-          <Link className="navbar-link link1" to="/contas/adicionar">Adicionar Conta</Link>
+          <Link className="navbar-link link1" to="/contas/adicionar">Criar Conta</Link>
           <Link className="navbar-link link2" to="/contas">Histórico</Link>
         </nav>
         <Layout>

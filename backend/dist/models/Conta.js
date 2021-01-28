@@ -19,14 +19,22 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.StatusDaConta = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
+var StatusDaConta;
+(function (StatusDaConta) {
+    StatusDaConta[StatusDaConta["Pendente"] = 0] = "Pendente";
+    StatusDaConta[StatusDaConta["Paga"] = 1] = "Paga";
+    StatusDaConta[StatusDaConta["Cancelada"] = 2] = "Cancelada";
+})(StatusDaConta = exports.StatusDaConta || (exports.StatusDaConta = {}));
 const ContaSchema = new mongoose_1.Schema({
     descricao: { type: String, required: true },
     valor: { type: Number, required: true },
     dataReferencia: {
         ano: { type: Number, required: true },
         mes: { type: Number, required: true }
-    }
+    },
+    status: { type: Number, required: true }
 });
 const Conta = mongoose_1.default.model("Conta", ContaSchema);
 exports.default = Conta;
