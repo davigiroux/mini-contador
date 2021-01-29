@@ -3,6 +3,8 @@ import SalvarConta from '../components/SalvarConta';
 import Fetcher from '../lib/fetcher';
 import Swal from 'sweetalert2';
 import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selecionarUsuarioLogado } from './Login/usuarioLogadoSlice';
 
 const stateInicial = {
     descricao: '',
@@ -16,8 +18,10 @@ const stateInicial = {
 
 function EditarConta() {
     const { contaId } = useParams(); 
+    
+    const usuarioLogado = useSelector(selecionarUsuarioLogado);
     const editarConta = async (conta) => {
-        const res = await Fetcher.update('contas', contaId, conta);
+        const res = await Fetcher.update('contas', contaId, {...conta, usuario: usuarioLogado._id});
         if(res)
             Swal.fire('Deu certo!', 'Conta salva com sucesso', 'success');
 
