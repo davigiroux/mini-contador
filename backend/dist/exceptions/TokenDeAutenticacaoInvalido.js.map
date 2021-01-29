@@ -1,0 +1,1 @@
+{"version":3,"file":"TokenDeAutenticacaoInvalido.js","sourceRoot":"","sources":["../../src/exceptions/TokenDeAutenticacaoInvalido.ts"],"names":[],"mappings":";;;;;AAAA,oEAA4C;AAE5C,MAAM,2BAA4B,SAAQ,uBAAa;IACrD;QACE,KAAK,CAAC,GAAG,EAAE,gCAAgC,CAAC,CAAC;IAC/C,CAAC;CACF;AAED,kBAAe,2BAA2B,CAAC"}

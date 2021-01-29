@@ -1,0 +1,1 @@
+{"version":3,"file":"TokenDeAutenticacaoFaltando.js","sourceRoot":"","sources":["../../src/exceptions/TokenDeAutenticacaoFaltando.ts"],"names":[],"mappings":";;;;;AAAA,oEAA4C;AAE5C,MAAM,2BAA4B,SAAQ,uBAAa;IACrD;QACE,KAAK,CAAC,GAAG,EAAE,gDAAgD,CAAC,CAAC;IAC/D,CAAC;CACF;AAED,kBAAe,2BAA2B,CAAC"}
