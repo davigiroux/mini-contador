@@ -3,7 +3,7 @@ import store from "../app/store";
 import { deslogadoComSucesso } from "../pages/Login/usuarioLogadoSlice";
 
 const host = window.location.href.includes('localhost:5000') ? 'http://localhost:5000' : 'https://mini-contador-api.herokuapp.com/';
-const api = axios.create({baseURL: host, timeout: 1000});
+const api = axios.create({baseURL: host, timeout: 10000});
 
 api.interceptors.request.use((config) => {
     const token = store.getState().usuarioLogado.token;
