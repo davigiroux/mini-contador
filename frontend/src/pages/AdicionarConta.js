@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import SalvarConta from '../components/SalvarConta';
 import Fetcher from '../lib/fetcher';
 import Swal from 'sweetalert2';
-import store from '../app/store';
+import { useSelector } from 'react-redux';
+import { selecionarUsuarioLogado } from './Login/usuarioLogadoSlice';
 
 const stateInicial = {
-    usuario: store.getState().usuarioLogado._id,
     descricao: '',
     valor: 0,
     dataReferencia: {
@@ -15,8 +15,10 @@ const stateInicial = {
 };
 
 function AdicionarConta() {
+    const usuarioLogado = useSelector(selecionarUsuarioLogado);
+
     const addConta = async (conta) => {
-        const res = await Fetcher.post('contas', conta);
+        const res = await Fetcher.post('contas', {...conta, usuario: usuarioLogado._id});
         if(res)
             Swal.fire('Deu certo!', 'Conta salva com sucesso', 'success');
 
