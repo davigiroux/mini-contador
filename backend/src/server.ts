@@ -1,4 +1,4 @@
-import App from './app';
+import App from './App';
 import AutenticacaoController from './controllers/AutenticacaoController';
 import ContaController from './controllers/ContaController';
 
