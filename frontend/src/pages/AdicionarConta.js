@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import SalvarConta from '../components/SalvarConta';
 import Fetcher from '../lib/fetcher';
 import Swal from 'sweetalert2';
+import store from '../app/store';
 
 const stateInicial = {
+    usuario: store.getState().usuarioLogado._id,
     descricao: '',
     valor: 0,
     dataReferencia: {
@@ -12,10 +14,9 @@ const stateInicial = {
     }
 };
 
-const apiUrl = "http://localhost:5000/contas";
 function AdicionarConta() {
     const addConta = async (conta) => {
-        const res = await Fetcher.post(apiUrl, conta);
+        const res = await Fetcher.post('contas', conta);
         if(res)
             Swal.fire('Deu certo!', 'Conta salva com sucesso', 'success');
 

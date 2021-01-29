@@ -1,69 +1,50 @@
 import Swal from 'sweetalert2';
+import api from '../api/api.instance';
 
 class Fetcher {
     static async post(url, data) {
-        const res = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }).then(res => res.json());
-        
-        if(res.errors) {
-            this.emitirMensagemDeErro(res.message)
-            return;
+        try {
+            const res = await api.post(url, data);
+            return res.data;
+        } catch (error) {
+            const {status, message} = error.response ? error.response.data : error;
+            this.emitirMensagemDeErro(status, message);
         }
-
-        return res;
     }
 
-    static async buscar(url) {
-        const res = await fetch(url).then(res => res.json());
-
-        if(res.errors) {
-            this.emitirMensagemDeErro(res.message)
-            return;
+    static async fetch(url) {
+        try {
+            const res = await api.get(url);
+            return res.data;
+        } catch (error) {
+            const {status, message} = error.response ? error.response.data : error;
+            this.emitirMensagemDeErro(status, message);
         }
-
-        return res;
     }
 
-    static async deletar(url, id) {
-        const res = await fetch(`${url}/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(res => res.json());
+    static async delete(url, id) {
 
-        if(res.errors) {
-            this.emitirMensagemDeErro(res.message)
-            return;
+        try {
+            const res = await api.delete(`${url}/${id}`);
+            return res.data;
+        } catch (error) {
+            const {status, message} = error.response ? error.response.data : error;
+            this.emitirMensagemDeErro(status, message);
         }
-        
-        return res;
     }
 
-    static async alterar(url, id, data) {
-        const res = await fetch(`${url}/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        }).then(res => res.json());
-
-        if(res.errors) {
-            this.emitirMensagemDeErro(res.message)
-            return;
+    static async update(url, id, data) {
+        try {
+            const res = await api.put(`${url}/${id}`, data);
+            return res.data;
+        } catch (error) {
+            const {status, message} = error.response ? error.response.data : error;
+            this.emitirMensagemDeErro(status, message);
         }
-        
-        return res;
     }
 
-    static emitirMensagemDeErro(mensagem) {
-        Swal.fire('Algo deu errado...', mensagem, 'error');
+    emitirMensagemDeErro(status,mensagem) {
+        Swal.fire(`${status} - Algo deu errado...`, mensagem, 'error');
     }
 }
 

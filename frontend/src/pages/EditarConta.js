@@ -4,7 +4,6 @@ import Fetcher from '../lib/fetcher';
 import Swal from 'sweetalert2';
 import { useParams } from 'react-router-dom';
 
-const apiUrl = "http://localhost:5000/contas";
 const stateInicial = {
     descricao: '',
     valor: 0,
@@ -15,10 +14,10 @@ const stateInicial = {
     } 
 };
 
-function AdicionarConta() {
+function EditarConta() {
     const { contaId } = useParams(); 
     const editarConta = async (conta) => {
-        const res = await Fetcher.alterar(apiUrl, contaId, conta);
+        const res = await Fetcher.update('contas', contaId, conta);
         if(res)
             Swal.fire('Deu certo!', 'Conta salva com sucesso', 'success');
 
@@ -31,7 +30,7 @@ function AdicionarConta() {
     }
 
     async function buscarConta() {
-        const dado = await Fetcher.buscar(`${apiUrl}/${contaId}`);
+        const dado = await Fetcher.fetch(`contas/${contaId}`);
         setConta(dado);
     }
 
@@ -45,4 +44,4 @@ function AdicionarConta() {
     );
 }
 
-export default AdicionarConta;
+export default EditarConta;

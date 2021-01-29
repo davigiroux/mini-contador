@@ -6,8 +6,8 @@ import FiltroDeReferencia from '../components/FiltroDeReferencia';
 import ListaDeContas from '../components/ListaDeContas';
 import Fetcher from '../lib/fetcher';
 import { formatarParaReal } from '../lib/formatadorDeString';
-
-const apiUrl = "http://localhost:5000/contas";
+import { useSelector } from 'react-redux';
+import { selecionarUsuarioLogado } from './Login/usuarioLogadoSlice';
 
 const CabecalhoDasContas = styled.div`
     display: grid;
@@ -56,6 +56,7 @@ const TextoPendente = styled.span`
 function Contas() {
     const [contas, setContas] = useState([]);
     const [ordenacaoAtiva, setOrdenacaoAtiva] = useState('');
+    const usuarioLogado = useSelector(selecionarUsuarioLogado);
 
     const [filtroDeReferencia, setFiltroDeReferencia] = useState({
         anoReferencia: new Date().getFullYear(),
@@ -63,7 +64,6 @@ function Contas() {
     })
 
     const excluirConta = async (id) => {
-
         const resultado = await Swal.fire({
             title: 'Tem certeza que deseja excluir essa conta?',
             text: 'Você não poderá reverter após confirmar',
@@ -77,7 +77,7 @@ function Contas() {
         if(!resultado.isConfirmed)
             return;
           
-        const res = await Fetcher.deletar(apiUrl, id);
+        const res = await Fetcher.delete('contas', id);
 
         if(res)
             Swal.fire('Deu certo!', 'Conta excluída com sucesso', 'success');
@@ -86,11 +86,10 @@ function Contas() {
     }
 
     const pagarConta = async (id) => {
-          
-        const res = await Fetcher.post(`${apiUrl}/${id}/pagar`);
+        const res = await Fetcher.post(`contas/${id}/pagar`);
 
         if(res)
-            Swal.fire('Deu certo!', 'Conta excluída com sucesso', 'success');
+            Swal.fire('Deu certo!', 'Conta paga com sucesso', 'success');
 
         buscarDados();
     }
@@ -125,7 +124,7 @@ function Contas() {
 
 
     async function buscarDados(mesReferencia = new Date().getMonth(), anoReferencia = new Date().getFullYear()) {
-        const dados = await Fetcher.buscar(`${apiUrl}/mesReferencia/${mesReferencia}/anoReferencia/${anoReferencia}`);
+        const dados = await Fetcher.fetch(`contas/usuario/${usuarioLogado._id}?mesReferencia=${mesReferencia}&anoReferencia=${anoReferencia}`);
 
         let contasOrdenadas = dados.sort((c1, c2) => c1.status - c2.status);
         setContas(contasOrdenadas);
@@ -133,6 +132,7 @@ function Contas() {
 
     useEffect(() => {
         buscarDados();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     return (
         <div>

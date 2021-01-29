@@ -1,16 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import Contas from './pages/Contas';
-import AdicionarConta from './pages/AdicionarConta';
-import EditarConta from './pages/EditarConta';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
-
+import {  BrowserRouter as Router } from "react-router-dom";
 import './App.css';
+import NavBar from './components/NavBar';
+import Roteamento from './routes/Rotas';
 
 const Layout = styled.div`
   display: grid;
@@ -32,24 +25,10 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <nav className="navbar">
-          <span className="logo">MiniContador</span>
-          <Link className="navbar-link link1" to="/contas/adicionar">Criar Conta</Link>
-          <Link className="navbar-link link2" to="/contas">Histórico</Link>
-        </nav>
+        <NavBar />
         <Layout>
           <Content>
-            <Switch>
-              <Route path="/contas/adicionar">
-                <AdicionarConta />
-              </Route>
-              <Route exact path="/contas">
-                <Contas />
-              </Route>
-              <Route path={`/contas/:contaId/editar`}>
-                <EditarConta />
-              </Route>
-            </Switch>
+            <Roteamento />
           </Content>
         </Layout>
       </div>
