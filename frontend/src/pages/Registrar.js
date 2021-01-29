@@ -22,11 +22,15 @@ function Registrar() {
 
         try {
             await api.post('autenticacao/registrar', {email, senha, nome});
-            await Swal.fire('Sucesso!', 'Usuário cadastrado com sucesso, faça o login agora!', 'success');
+            Swal.fire('Sucesso!', 'Usuário cadastrado com sucesso, faça o login agora!', 'success').then();
             history.push('/login');
         } catch (error) {
-            const {status, message} = error.response ? error.response.data : error;
-            Swal.fire(`${status} - Algo deu errado...`, message, 'error');
+            if(error.response) {
+                const {status, message} = error.response.data;
+                Swal.fire(`${status} - Algo deu errado...`, message, 'error');
+            } else {
+                console.log(error);
+            }
         }
     }
     
