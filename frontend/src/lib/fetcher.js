@@ -18,7 +18,7 @@ class Fetcher {
             return res.data;
         } catch (error) {
             const {status, message} = error.response ? error.response.data : error;
-            this.emitirMensagemDeErro(status, message);
+            this.emitirMensagemDeErro(status , message);
         }
     }
 
@@ -43,7 +43,7 @@ class Fetcher {
         }
     }
 
-    emitirMensagemDeErro(status,mensagem) {
+    emitirMensagemDeErro(status = 500, mensagem = "Erro desconhecido") {
         Swal.fire(`${status} - Algo deu errado...`, mensagem, 'error');
     }
 }
