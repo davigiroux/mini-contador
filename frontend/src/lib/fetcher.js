@@ -43,7 +43,7 @@ class Fetcher {
         }
     }
 
-    emitirMensagemDeErro(status = 500, mensagem = "Erro desconhecido") {
+    static emitirMensagemDeErro(status = 500, mensagem = "Erro desconhecido") {
         Swal.fire(`${status} - Algo deu errado...`, mensagem, 'error');
     }
 }
