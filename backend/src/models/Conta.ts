@@ -15,6 +15,7 @@ export interface ContaInterface extends Document {
   valor: number;
   dataReferencia: ReferenciaInterface;
   status: StatusDaConta;
+  usuario: string;
 }
 
 const ContaSchema: Schema = new Schema({
@@ -24,7 +25,8 @@ const ContaSchema: Schema = new Schema({
     ano: { type: Number, required: true },
     mes: { type: Number, required: true}
   },
-  status: {type: Number, required: true}
+  status: {type: Number, required: true},
+  usuario: {type: Schema.Types.ObjectId, ref: "Usuario"}
 });
 
 const Conta = mongoose.model<ContaInterface>("Conta", ContaSchema);

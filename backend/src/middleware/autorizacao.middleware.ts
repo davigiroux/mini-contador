@@ -9,7 +9,7 @@ import Usuario from '../models/Usuario';
 async function autorizacaoMiddleware(request: Request, response: Response, next: NextFunction) {
   const req = request as RequestComUsuario;
   const headers = req.headers;
-  if (headers && headers.authorization) {
+  if (headers && headers.authorization && headers.authorization !== "") {
     const secret = process.env.JWT_SECRET;
     try {
       const token = headers.authorization.split(" ")[1];

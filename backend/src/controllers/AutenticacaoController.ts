@@ -41,8 +41,7 @@ class AutenticacaoController implements Controller {
         senha: hashedPassword,
       });
       user.senha = '';
-      const tokenData = this.createToken(user);
-      response.send({token: tokenData});
+      response.send(user._id);
     }
   }
    
@@ -54,7 +53,7 @@ class AutenticacaoController implements Controller {
       if (isPasswordMatching) {
         usuario.senha = '';
         const tokenData = this.createToken(usuario);
-        response.send({token: tokenData});
+        response.send({...tokenData, nome: usuario.nome, _id: usuario._id});
       } else {
         next(new CredenciaisErradas());
       }

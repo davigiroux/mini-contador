@@ -38,16 +38,6 @@ class ContaController {
     constructor() {
         this.path = '/contas';
         this.router = express_1.default.Router();
-        this.buscarContasDoUsuario = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
-            Conta_1.default.find((err, contas) => {
-                if (err) {
-                    res.send(err);
-                }
-                else {
-                    res.send(contas);
-                }
-            });
-        });
         this.buscarConta = (req, res) => __awaiter(this, void 0, void 0, function* () {
             Conta_1.default.findById(req.params.id, (err, conta) => {
                 if (err) {
@@ -91,9 +81,12 @@ class ContaController {
             });
         });
         this.buscarContasDoUsuarioPorAnoEMes = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const { anoReferencia, mesReferencia } = req.query;
+            const idUsuario = req.params.idUsuario;
             Conta_1.default
-                .where('dataReferencia.mes').equals(req.params.mesReferencia)
-                .where('dataReferencia.ano').equals(req.params.anoReferencia)
+                .where('usuario').equals(idUsuario)
+                .where('dataReferencia.mes').equals(mesReferencia)
+                .where('dataReferencia.ano').equals(anoReferencia)
                 .exec((erro, resultado) => {
                 if (erro)
                     res.status(400).send(erro);
@@ -115,8 +108,7 @@ class ContaController {
         this.inicializarRotas();
     }
     inicializarRotas() {
-        this.router.get(this.path, autorizacao_middleware_1.default, this.buscarContasDoUsuario);
-        this.router.get(`${this.path}/mesReferencia/:mesReferencia/anoReferencia/:anoReferencia`, autorizacao_middleware_1.default, this.buscarContasDoUsuarioPorAnoEMes);
+        this.router.get(`${this.path}/usuario/:idUsuario`, autorizacao_middleware_1.default, this.buscarContasDoUsuarioPorAnoEMes);
         this.router.get(`${this.path}/:id`, autorizacao_middleware_1.default, this.buscarConta);
         this.router.post(`${this.path}`, autorizacao_middleware_1.default, this.adicionarConta);
         this.router.put(`${this.path}/:id`, autorizacao_middleware_1.default, this.alterarConta);

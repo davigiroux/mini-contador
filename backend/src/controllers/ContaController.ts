@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from "express";
 import autorizacaoMiddleware from "../middleware/autorizacao.middleware";
-import Conta, {StatusDaConta} from "../models/Conta";
+import Conta, {ContaInterface, StatusDaConta} from "../models/Conta";
 import Controller from "./interfaces/controller.interface";
 
 class ContaController implements Controller {
@@ -12,23 +12,12 @@ class ContaController implements Controller {
   }
 
   private inicializarRotas() {
-    this.router.get(this.path, autorizacaoMiddleware, this.buscarContasDoUsuario);
-    this.router.get(`${this.path}/mesReferencia/:mesReferencia/anoReferencia/:anoReferencia`, autorizacaoMiddleware, this.buscarContasDoUsuarioPorAnoEMes);
+    this.router.get(`${this.path}/usuario/:idUsuario`, autorizacaoMiddleware, this.buscarContasDoUsuarioPorAnoEMes);
     this.router.get(`${this.path}/:id`, autorizacaoMiddleware, this.buscarConta);
     this.router.post(`${this.path}`, autorizacaoMiddleware, this.adicionarConta);
     this.router.put(`${this.path}/:id`, autorizacaoMiddleware, this.alterarConta);
     this.router.post(`${this.path}/:id/pagar`, autorizacaoMiddleware, this.pagarConta);
     this.router.delete(`${this.path}/:id`, autorizacaoMiddleware, this.deletarConta);
-  }
-
-  private buscarContasDoUsuario = async (req: Request, res: Response, next: NextFunction) => {
-    Conta.find((err: any, contas: any) => {
-      if (err) {
-        res.send(err);
-      } else {
-        res.send(contas);
-      }
-    });
   }
 
   private buscarConta = async (req: Request, res: Response) => {
@@ -78,9 +67,12 @@ class ContaController implements Controller {
   }
 
   private buscarContasDoUsuarioPorAnoEMes = async (req: Request, res: Response) => {
+    const {anoReferencia, mesReferencia} = req.query;
+    const idUsuario = req.params.idUsuario;
     Conta
-    .where('dataReferencia.mes').equals(req.params.mesReferencia)
-    .where('dataReferencia.ano').equals(req.params.anoReferencia)
+    .where('usuario').equals(idUsuario)
+    .where('dataReferencia.mes').equals(mesReferencia)
+    .where('dataReferencia.ano').equals(anoReferencia)
     .exec((erro: Response, resultado: Response) => {
       if(erro)
         res.status(400).send(erro)
