@@ -2,7 +2,7 @@ import axios from "axios";
 import store from "../app/store";
 import { deslogadoComSucesso } from "../pages/Login/usuarioLogadoSlice";
 
-const host = window.location.includes('localhost:5000') ? 'http://localhost:5000' : 'https://mini-contador-api.herokuapp.com/';
+const host = window.location.href.includes('localhost:5000') ? 'http://localhost:5000' : 'https://mini-contador-api.herokuapp.com/';
 const api = axios.create({baseURL: host, timeout: 1000});
 
 api.interceptors.request.use((config) => {
