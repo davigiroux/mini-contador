@@ -16,7 +16,8 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(response => {
     return response;
 }, erro => {
-    if(erro.response.status === 401) {
+    console.log(erro)
+    if(erro.response && erro.response.status === 401) {
         const requestConfig = erro.config;
         window.location = './login';
         store.dispatch(deslogadoComSucesso());
