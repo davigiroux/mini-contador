@@ -28,13 +28,15 @@ a {
 }
 
 .navbar .logo {
-  color: #f7f5f5;
   font-size: 30px;
   font-weight: 600;
   grid-column-start: 1;
   padding-left: 20px;
 }
 
+.navbar .logo > img{
+  width: 80px;
+}
 
 .navbar > .navbar-links > .navbar-link {
   text-decoration: none;
@@ -53,3 +55,31 @@ a {
 .navbar .navbar-link:hover {
   color: #dadada;
 } 
+
+@media(max-width: 800px) {
+  .navbar {
+    column-gap: 10px;
+    height: 70px;
+  }
+
+  .navbar .logo {
+    font-size: 20px;
+    padding-left: 10px;
+  }
+
+  .navbar .logo > img{ 
+    width: 60px;
+  }
+
+  .navbar > .navbar-links > .navbar-link {
+    text-decoration: none;
+    color: #f7f5f5;
+    font-size: 15px;
+    align-self: center;
+    margin-right: 10px;
+  }
+
+  .navbar .login {
+    padding: 0;
+  }
+}

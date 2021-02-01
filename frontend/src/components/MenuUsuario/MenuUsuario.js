@@ -21,6 +21,10 @@ const ContainerIcone = styled.div`
         color: #39b2d6;
         background-color: #f7f5f5;
     }
+
+    @media(max-width: 800px) {
+        margin-right: 10px;
+    }
 `;
 
 const MenuLista = styled.ul`
