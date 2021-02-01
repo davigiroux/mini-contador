@@ -17,7 +17,7 @@ function NavBar() {
 
     return (
         <nav className="navbar">
-          <span className="logo"><img src="/img/minicontador.png" alt="Logo Mini Contador"/></span>
+          <span className="logo"><img src="/img/minicontador2.png" alt="Logo Mini Contador"/></span>
           {usuarioEstaLogado 
           ? <div className="navbar-links">
                 <Link className="navbar-link" to="/contas/adicionar">Criar Conta</Link>
