@@ -22,7 +22,7 @@ function AdicionarConta() {
         if(res)
             Swal.fire('Deu certo!', 'Conta salva com sucesso', 'success');
 
-        setConta(stateInicial);
+        setConta({...stateInicial, dataReferencia: {...conta.dataReferencia}});
     };
 
     const [conta, setConta] = useState(stateInicial);

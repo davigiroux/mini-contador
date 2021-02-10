@@ -123,7 +123,7 @@ function Contas() {
     }
 
 
-    async function buscarDados(mesReferencia = new Date().getMonth(), anoReferencia = new Date().getFullYear()) {
+    async function buscarDados(mesReferencia = filtroDeReferencia.mes || new Date().getMonth(), anoReferencia = filtroDeReferencia.ano || new Date().getFullYear()) {
         const dados = await Fetcher.fetch(`contas/usuario/${usuarioLogado._id}?mesReferencia=${mesReferencia}&anoReferencia=${anoReferencia}`);
 
         let contasOrdenadas = dados.sort((c1, c2) => c1.status - c2.status);

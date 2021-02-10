@@ -86,7 +86,7 @@ function SalvarConta({ conta, salvarConta, emitirEvento, ehEdicao = false }) {
 
     const ehNumero = (string) => !isNaN(string) && !isNaN(parseFloat(string));
 
-    const tratarNumero = (input) => ehNumero(input) ? Number(input) : 0;
+    const validarInputParaNumero = (input) => ehNumero(input) ? Number(input) : 0;
 
     return (
         <Div>
@@ -105,7 +105,7 @@ function SalvarConta({ conta, salvarConta, emitirEvento, ehEdicao = false }) {
                     id="valor" 
                     name="valor" 
                     value={conta.valor} 
-                    onChange={(e) => emitirEvento({...conta, valor: tratarNumero(e.target.value)})}
+                    onChange={(e) => emitirEvento({...conta, valor: validarInputParaNumero(e.target.value)})}
                 />
             </div>
             <div>
@@ -115,8 +115,8 @@ function SalvarConta({ conta, salvarConta, emitirEvento, ehEdicao = false }) {
                 <Select 
                     id="mesReferencia" 
                     name="mesReferencia" 
-                    value={meses[conta.dataReferencia.mes]} 
-                    onChange={(e) => emitirEvento({...conta, dataReferencia: { ano: conta.dataReferencia.ano, mes: tratarNumero(e.target.value)}})}
+                    value={conta.dataReferencia.mes} 
+                    onChange={(e) => emitirEvento({...conta, dataReferencia: { ano: conta.dataReferencia.ano, mes: validarInputParaNumero(e.target.value)}})}
                 >
 
                     {meses.map((mes, index) => (<option value={index} key={index}>{mes}</option>))}
@@ -132,7 +132,7 @@ function SalvarConta({ conta, salvarConta, emitirEvento, ehEdicao = false }) {
                     id="anoReferencia" 
                     name="anoReferencia" 
                     value={conta.dataReferencia.ano} 
-                    onChange={(e) => emitirEvento({...conta, dataReferencia: { mes: conta.dataReferencia.mes, ano: tratarNumero(e.target.value)}})}
+                    onChange={(e) => emitirEvento({...conta, dataReferencia: { mes: conta.dataReferencia.mes, ano: validarInputParaNumero(e.target.value)}})}
                 />
             </div>
             <ContainerBotao>
